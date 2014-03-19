@@ -1,5 +1,10 @@
 # vagrant-fsharp
 
+Attempt to get a Vagrant-compatible description of a Linux machine set
+up for F# development with latest tools.
+
+Status: not quite working yet.
+
 Provides a quick way to get a clean F# linux development environment:
 
     hg clone $repo/vagrant-fsharp
