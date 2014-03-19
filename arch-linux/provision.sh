@@ -8,6 +8,14 @@ function make_fsharp {
     makepkg && sudo pacman -U *.xz
 }
 
+function make_fsharpbinding {
+    mkdir ~/fsharpbinding-build
+    cd ~/fsharpbinding-build
+    git clone https://github.com/intellifactory/fsharpbinding
+    cd fsharpbinding/monodevelop
+    ./configure.sh && make && make install
+}
+
 function setupvm {
     sudo pacman -Syu --noconfirm
     i autoconf
@@ -25,9 +33,10 @@ function setupvm {
     i xfce4
     i xfce4-goodies
     make_fsharp
+    make_fsharpbinding
 }
 
-if [ -e "~/.setupvm" ]; then
+if [ ! -f "~/.setupvm" ]; then
     setupvm
     touch ~/.setupvm
 fi
