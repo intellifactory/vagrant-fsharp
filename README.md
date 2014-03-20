@@ -1,27 +1,44 @@
 # vagrant-fsharp
 
-Attempt to get a Vagrant-compatible description of a Linux machine set
-up for F# development with latest tools.
+Provides [Vagrant][vagrant] VM descriptors for quickly obtaining
+virtual machines set up for [F#][fsharp] development.
 
-Status: not quite working yet.
+Code below assumes you have [Vagrant][vagrant] set up.
 
-Provides a quick way to get a clean F# linux development environment:
+## Boxes
 
-    hg clone $repo/vagrant-fsharp
-    cd vagrant-fsharp
-    vagrant up
+## arch-linux
+
+Latest x64 Arch Linux, Mono & MonoDevelop from Arch base distro, basic
+Xfce4 desktop, F# and F# MD binding compiled from GitHub.
+
+Instructions:
+
+    cd ./arch-linux && vagrant up
     vagrant ssh
-    startxfce4    
+    startxfce4
 
-Assuming you have [vagrant][vagrant] set up.
+Since we are building F# from source, the process can take a while.
 
-## Notes
+## ubuntu-trusty
 
-Currently using Arch Linux, basic Xfce4 desktop.
+Ubuntu Trusty x64, Mono, MonoDevelop & F# from base distro, F# binding
+from MD add-in universe.
 
-## TODO
+Instructions:
 
-Got latest `mono` and `monodevelop` installed via `pacman`, but still
-need to set up `fsharp` and its binding.
+* [Download][trusty-box] the box (requires confirmation)
+* Register the box: `vagrant add trusty ~/Downloads/*.box`
+* `cd ./ubuntu-trusty && vagrant up`
 
+If all goes well, you should login visually via XFCE with
+`user=vagrant` and `pw=vagrant`.
+
+Right now the whole 1.6G box is sitting on Google Drive.  It would be
+much nicer to derive this box from a smaller base box, however it is
+not clear how to automate it -- how to make `apt-get` install the
+needed packages non-interactively.
+
+[fsharp]: http://fsharp.org/
+[trusty-box]: https://docs.google.com/uc?export=download&id=0B4rIj3jfBrslVFJrYWhRZl9xMlU
 [vagrant]: http://www.vagrantup.com/

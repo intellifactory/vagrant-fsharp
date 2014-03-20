@@ -2,18 +2,28 @@
 function i { sudo pacman -S --noconfirm $1; }
 
 function make_fsharp {
-    mkdir ~/fsharp-build
-    cd ~/fsharp-build
+    u=vagrant
+    h=/home/$u
+    b=$h/fsharp-build
+    rm -rf $b
+    mkdir $b
+    chown $u:$u $b
+    cd $b
     curl https://aur.archlinux.org/packages/fs/fsharp-git/PKGBUILD > PKGBUILD
-    makepkg && sudo pacman -U *.xz
+    su - $u -c "cd ~/fsharp-build && makepkg"
+    pacman -U --noconfirm *.xz
 }
 
 function make_fsharpbinding {
-    mkdir ~/fsharpbinding-build
-    cd ~/fsharpbinding-build
-    git clone https://github.com/intellifactory/fsharpbinding
-    cd fsharpbinding/monodevelop
-    ./configure.sh && make && make install
+    u=vagrant
+    h=/home/$u
+    b=$h/fsharpbinding-build
+    rm -rf $b
+    mkdir $b
+    chown $u:$u $b
+    cd $b
+    su - $u -c "git clone https://github.com/intellifactory/fsharpbinding"
+    su - $u -c "cd fsharpbinding/monodevelop && ./configure.sh && make MDTOOL=mdtool && make MDTOOL=mdtool install"
 }
 
 function setupvm {
