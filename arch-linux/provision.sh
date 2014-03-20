@@ -1,33 +1,39 @@
 #!/bin/bash
-function i { sudo pacman -S --noconfirm $1; }
 
+# installs a package non-interactively
+function i { pacman -S --noconfirm $1; }
+
+# creates a dir under /home/vagrant, and enters it
+function mk_dir {
+    u=vagrant
+    h=/home/$u
+    b=$h/$1
+    rm -rf $b
+    mkdir $b
+    chown $u:$u $b
+}
+
+# compiles and installs latest F# from Git
 function make_fsharp {
-    u=vagrant
-    h=/home/$u
-    b=$h/fsharp-build
-    rm -rf $b
-    mkdir $b
-    chown $u:$u $b
-    cd $b
-    curl https://aur.archlinux.org/packages/fs/fsharp-git/PKGBUILD > PKGBUILD
-    su - $u -c "cd ~/fsharp-build && makepkg"
-    pacman -U --noconfirm *.xz
+    dir=fsharpbuild
+    mk_dir $dir
+    su - vagrant -c "cd ~/$dir && curl -Os https://aur.archlinux.org/packages/fs/fsharp-git/PKGBUILD && makepkg"
+    cd $dir && pacman -U --noconfirm *.xz
 }
 
+# compiles and installs F# binding for MonoDevelop
 function make_fsharpbinding {
-    u=vagrant
-    h=/home/$u
-    b=$h/fsharpbinding-build
-    rm -rf $b
-    mkdir $b
-    chown $u:$u $b
-    cd $b
-    su - $u -c "git clone https://github.com/intellifactory/fsharpbinding"
-    su - $u -c "cd fsharpbinding/monodevelop && ./configure.sh && make MDTOOL=mdtool && make MDTOOL=mdtool install"
+    dir=fsharpbinding-build
+    mk_dir $dir
+    su - vagrant -c "cd ~/$dir && git clone https://github.com/intellifactory/fsharpbinding"
+    su - vagrant -c "cd ~/$dir/fsharpbinding/monodevelop && ./configure.sh && make MDTOOL=mdtool && make MDTOOL=mdtool install"
 }
 
+# complete VM setup function
 function setupvm {
-    sudo pacman -Syu --noconfirm
+    # upgrade system
+    pacman -Syu --noconfirm
+    # install packages
     i autoconf
     i automake
     i fakeroot
@@ -42,11 +48,12 @@ function setupvm {
     i xterm
     i xfce4
     i xfce4-goodies
+    # build & install F# and tools
     make_fsharp
     make_fsharpbinding
+    # do not setupvm next time
+    touch /root/.setupvm
 }
 
-if [ ! -f "~/.setupvm" ]; then
-    setupvm
-    touch ~/.setupvm
-fi
+# only setup the system once
+if [ ! -f "/root/.setupvm" ]; then setupvm; fi
