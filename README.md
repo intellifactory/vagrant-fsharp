@@ -7,7 +7,6 @@ Code below assumes you have [Vagrant][vagrant] set up.
 
 * [Issue tracker](https://github.com/intellifactory/vagrant-fsharp/issues)
 * [GitHub Git repo](http://github.com/intellifactory/vagrant-fsharp)
-* [Bitbucket Mercurial repo](http://bitbucket.org/IntelliFactory/vagrant-fsharp)
 
 ## Boxes
 
@@ -26,23 +25,20 @@ Since we are building F# from source, the process can take a while.
 
 ## ubuntu-trusty
 
-Ubuntu Trusty x64, Mono, MonoDevelop & F# from base distro, F# binding
-from MD add-in universe.
+| Software      | Version            |
+| ------------- |-------------------:|
+| os            | Ubuntu Trusty x64  |
+| mono          | 3.4.1              |
+| monodevelop   | 4.2.3              |
+| f#            | 3.0 (official pkg) |
+| f# plugin     | TODO               |
 
 Instructions:
 
-* [Download][trusty-box] the box (requires confirmation)
-* Register the box: `vagrant add trusty ~/Downloads/*.box`
-* `cd ./ubuntu-trusty && vagrant up`
-
-If all goes well, you should login visually via XFCE with
-`user=vagrant` and `pw=vagrant`.
-
-Right now the whole 1.6G box is sitting on Google Drive.  It would be
-much nicer to derive this box from a smaller base box, however it is
-not clear how to automate it -- how to make `apt-get` install the
-needed packages non-interactively.
+    cd ubuntu-trusty
+    vagrant up
+    vagrant ssh
+    sudo startxfce4 # TODO: enable X for default user
 
 [fsharp]: http://fsharp.org/
-[trusty-box]: https://docs.google.com/uc?export=download&id=0B4rIj3jfBrslVFJrYWhRZl9xMlU
 [vagrant]: http://www.vagrantup.com/
