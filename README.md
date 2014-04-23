@@ -7,7 +7,6 @@ Code below assumes you have [Vagrant][vagrant] set up.
 
 * [Issue tracker](https://github.com/intellifactory/vagrant-fsharp/issues)
 * [GitHub Git repo](http://github.com/intellifactory/vagrant-fsharp)
-* [Bitbucket Mercurial repo](http://bitbucket.org/IntelliFactory/vagrant-fsharp)
 
 ## Boxes
 
