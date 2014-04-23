@@ -6,7 +6,7 @@ Vagrant.configure("2") do |config|
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
 
-  config.vm.box = "ubuntu-trusty"
+  config.vm.box = "ubuntu/trusty64"
   config.vm.provision "shell", path: "provision.sh"
 
   # Create a forwarded port mapping which allows access to a specific port
@@ -35,7 +35,7 @@ Vagrant.configure("2") do |config|
   #
   config.vm.provider :virtualbox do |vb|
      vb.gui = true
-     vb.name = "ubuntu_trusty_vm"
+     vb.name = "ubuntu_trusty_fsharp_vm"
      vb.customize ["modifyvm", :id, "--memory", "2048"]
   end
 
